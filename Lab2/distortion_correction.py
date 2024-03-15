@@ -3,8 +3,10 @@ import numpy as np
 
 
 def barrel_distortion(image):
+    # Получаем размеры изображения
     rows, cols = image.shape[0:2]
 
+    # Вычисляем середину
     xi, yi = np.meshgrid(np.arange(cols), np.arange(rows))
     x_mid = cols / 2.0
     y_mid = rows / 2.0
@@ -12,10 +14,12 @@ def barrel_distortion(image):
     yi = yi - y_mid
     r, theta = cv2.cartToPolar(xi / x_mid, yi / y_mid)
 
+    # Указываем коэффициенты
     F3 = 0.3
     F5 = 0.12
     r = r + F3 ** 2 + F5 ** 2
 
+    # Применяем дисторсию
     u, v = cv2.polarToCart(r, theta)
     u = u * x_mid + x_mid
     v = v * y_mid + y_mid
@@ -25,8 +29,10 @@ def barrel_distortion(image):
 
 
 def pillow_distortion(image):
+    # Получаем размеры изображения
     rows, cols, channels = image.shape
 
+    # Вычисляем середину
     xi, yi = np.meshgrid(np.arange(cols), np.arange(rows))
     x_mid = cols / 2.0
     y_mid = rows / 2.0
@@ -34,9 +40,11 @@ def pillow_distortion(image):
     yi = yi - y_mid
     r, theta = cv2.cartToPolar(xi / x_mid, yi / y_mid)
 
+    # Указываем коэффициенты
     F3 = 0.1
     r = r + F3 * r ** 2
 
+    # Применяем дисторсию
     u, v = cv2.polarToCart(r, theta)
     u = u * x_mid + x_mid
     v = v * y_mid + y_mid

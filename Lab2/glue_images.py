@@ -3,6 +3,7 @@ import numpy as np
 
 
 def cut_image_to_parts(image, part_prefix='part'):
+    # Получаем размеры изображения
     rows, cols = image.shape[0:2]
 
     # Количество частей изображения
